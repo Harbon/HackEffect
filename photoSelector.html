@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JS图片随机排序</title>
+    <script type="text/javascript" src="/ajaxjs/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($){
+            var arr = [];
+            var tarr = [];
+            var pic = [];<!--图片地址 -->
+            pic[0] = "/jscss/demoimg/wall_s1.jpg";
+            pic[1] = "/jscss/demoimg/wall_s2.jpg";
+            pic[2] = "/jscss/demoimg/wall_s3.jpg";
+            pic[3] = "/jscss/demoimg/wall_s4.jpg";
+            pic[4] = "/jscss/demoimg/wall_s5.jpg";
+            pic[5] = "/jscss/demoimg/wall_s6.jpg";
+            pic[6] = "/jscss/demoimg/wall_s7.jpg";
+            pic[7] = "/jscss/demoimg/wall_s8.jpg";
+            pic[8] = "/jscss/demoimg/wall_s9.jpg";
+            var index = 9;<!--图片个数，可自定义，但是同时li的个数也要与图片个数一样 -->
+            function rond(){
+                for(var i=0; i<index; i++){<!--生成数组，保存序号 -->
+                    arr[i] = i;
+                }
+                var j = index;
+                for(var i=0; i<index; i++){<!--随机数组，图片随机 -->
+                    var t = Math.floor(Math.random()*j);
+                    j--;
+                    tarr[i] = arr.splice(t,1);
+                }
+            }
+            function resetPic(){
+                rond();
+                for(var i=0; i<index; i++){<!--生成图片，位置随机 --><!--016/images/"+i+".jpg -->
+                    $("#c_u").append("<li class=\"li_"+tarr[i]+"\" style=\"background:url("+pic[i]+")\"> </li>")
+                }
+            }
+            $("#reset span").click(function(){
+                rond();
+                for(var i=0; i<index; i++){
+                    $("#c_u li").eq(i).attr("class","").addClass("li_"+tarr[i]);
+                }
+            });
+            resetPic();
+        });
+    </script>
+    <style type="text/css">
+        body{background:#CCCCCC; padding:0; margin:0;}
+        #reset{width:898px; height:36px; margin:0 auto; position:relative; color:#FFFFFF; font-size:28px; line-height:36px; font-weight:bold;}
+        #reset span{cursor:pointer; text-decoration:underline;}
+        #c_u{width:898px; height:596px; margin:0 auto; position:relative; list-style:none; padding:8px; border:4px solid #FFFFFF;}
+        #c_u li{margin:8px; border:4.5px solid #FFFFFF; width:125px; height:125px; position:absolute; padding:0; transition:all .5s ease-out 0s; -webkit-transition:all .5s ease-out 0s; -o-transition:all .5s ease-out 0s;}
+        #c_u li{cursor:move;}
+        #c_u li.red{border-color:#FF99CC;}
+        #c_u li.move{position:fixed;}
+        #c_u li.abs{position:absolute;}
+        #c_u li img{vertical-align:top;}
+        #c_u .li_0{top:8px; left:8px;}
+        #c_u .li_1{top:8px; left:158px;}
+        #c_u .li_2{top:8px; left:308px;}
+        #c_u .li_3{top:8px; left:458px;}
+        #c_u .li_4{top:8px; left:608px;}
+        #c_u .li_5{top:8px; left:758px;}
+        #c_u .li_6{top:158px; left:8px;}
+        #c_u .li_7{top:158px; left:158px;}
+        #c_u .li_8{top:158px; left:308px;}
+        #c_u .li_9{top:158px; left:458px;}
+        #c_u .li_10{top:158px; left:608px;}
+        #c_u .li_11{top:158px; left:758px;}
+        #c_u .li_12{top:308px; left:8px;}
+        #c_u .li_13{top:308px; left:158px;}
+        #c_u .li_14{top:308px; left:308px;}
+        #c_u .li_15{top:308px; left:458px;}
+        #c_u .li_16{top:308px; left:608px;}
+        #c_u .li_17{top:308px; left:758px;}
+        #c_u .li_18{top:458px; left:8px;}
+        #c_u .li_19{top:458px; left:158px;}
+        #c_u .li_20{top:458px; left:308px;}
+        #c_u .li_21{top:458px; left:458px;}
+        #c_u .li_22{top:458px; left:608px;}
+        #c_u .li_23{top:458px; left:758px;}
+    </style>
+</head>
+<body>
+<div id="reset"><span>排序</span>:</div>
+<ul id="c_u"></ul>
+</body>
+</html>

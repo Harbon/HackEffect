@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <meta charset=“UTF-8″>
+    <title>HackerEffect</title>
+    <style>
+        body{font-family:Helvetica,Verdana,sans-serif;}
+        #matrix{margin:0 auto;width:1400px;height:800px;overflow:hidden;background-color:#000;color: rgba(0, 255, 0, .7);text-shadow:rgba(0,255,0,.8) 5px 5px 10px;position:relative;}
+        @-webkit-keyframes fade{
+            0% {opacity:1;}
+            50%{opacity: 1}
+            100% {opacity:0;}}
+        @-webkit-keyframes fall{from{top:-250px;}to{top:800px;}}
+        @-webkit-keyframes messageFall{
+            0%{top:-250px;-webkit-transform:scale(1,1) rotate(90deg);opacity: 1}
+            50%{top:400px;-webkit-transform:scale(1,1) rotate(0deg);opacity: 1}
+            75%{top:50px;left:50px;-webkit-transform:scale(1,1) rotate(0deg);opacity: 1}
+            100%{top:50px;left:50px;-webkit-transform:scale(10,10) rotate(0deg);opacity: 0}
+        }
+        #matrix .fallNumber{position:absolute;top:0px;-webkit-transform-origin:0%;-webkit-transform:rotate(90deg);-webkit-animation-name:fall,fade;-webkit-animation-iteration-count:infinite;-webkit-animation-direction:normal;-webkit-animation-timing-function:ease-out;}
+        #matrix .fallMessage{position: absolute;top:0px;-webkit-transform-origin:center center;-webkit-transform:rotate(90deg);-webkit-animation-name:messageFall;-webkit-animation-iteration-count:1;-webkit-animation-direction:normal;-webkit-animation-timing-function:ease-out;-webkit-animation-fill-mode:forwards}
+        #myContent, #myContent blink{
+            width:900px;
+            height:80px;
+            background:black;
+            color: #00FF00;
+            font-family:courier;
+            font-size: 40px;
+        }
+        blink{
+            display:inline;
+        }
+        #commandLine{margin:0 auto;width: 900px;height: 50px background-color: #000000;top:-800px;position: relative;}
+    </style>
+</head>
+<body>
+<div>
+<div id="matrix">
+    <div id="myContent">
+    </div>
+    <div id="contentToWrite" style="display:none">
+        Link start                decoding...                  </br>
+                       我们来自五湖四海，相聚不二家。</br>
+                       我们追求自我，也将彼此羁绊。</br>
+                       我们各怀技艺，码农从来只是外界的标签。</br>
+                       我们不是凡客，我们是极客。</br>
+                       这是开括者的时代，我们将，改变世界。</br>
+        <br>
+    </div>
+</div>
+<!--<div id="commandLine">-->
+    <!--<div id="myContent">-->
+    <!--</div>-->
+    <!--<div id="contentToWrite" style="display:none">-->
+        <!--Link start                decoding...                  </br>-->
+        <!--We love programming               We don’t love bug.  我们爱编程，我们不爱BUG</br>-->
+        <!--We love life                 We don’t love eyes with black circle.  我们爱生活，我们不爱黑眼圈</br>-->
+        <!--We are same as you               We are not same as you   我们和你们一样，我们和你们不一样，</br>-->
+        <!--We are not vancls               We are geeks.  我们不是凡客，我们是极客-->
+                               <!--<br>-->
+    <!--</div>-->
+<!--</div>-->
+</div>
+<script >
+        var id;
+//        var bgm = new Audio("bgm.mp3");
+//        bgm.play();
+        var charIndex = -1;
+        var stringLength = 0;
+        var inputText;
+        var keySound = new Audio("type.wav");
+        for (var i = 0;i<200;i++) {
+            var matrix = document.getElementById("matrix");
+            var numberEffectCol = document.createElement("div");
+            var randomSpeed = 5 * Math.random() + 1.5;
+            var randomPosition = 1400 * Math.random();
+            numberEffectCol.setAttribute("style", "-webkit-animation-duration:" + randomSpeed + "s;left:" + randomPosition + "px");
+            numberEffectCol.setAttribute("class", "fallNumber")
+            numberEffectCol.innerHTML = "100011010101000010111110";
+            matrix.appendChild(numberEffectCol);
+        }
+
+        var messageStart = function () {
+
+             id = setInterval(function () {
+
+                 var matrix = document.getElementById("matrix");
+                 var numberEffectCol = document.createElement("div");
+                 var randomSpeed = 5 * Math.random() + 1.5;
+                 var randomPosition = 1400 * Math.random();
+                 numberEffectCol.setAttribute("style", "-webkit-animation-duration:" + randomSpeed + "s;left:" + randomPosition + "px");
+                 numberEffectCol.setAttribute("class", "fallMessage")
+                 numberEffectCol.innerHTML = "100011010101000010111110";
+                 matrix.appendChild(numberEffectCol);
+
+             },500)
+
+        }
+
+        setTimeout('messageStart()',7000);
+
+
+        function writeContent(init){
+            keySound.load();
+            if(init){
+                inputText = document.getElementById('contentToWrite').innerHTML;
+            }
+            if(charIndex==-1){
+                charIndex = 0;
+                stringLength = inputText.length;
+            }
+            var initString = document.getElementById('myContent').innerHTML;
+            initString = initString.replace(/<SPAN.*$/gi,"");
+
+            var theChar = inputText.charAt(charIndex);
+            if (theChar == '只'){
+                clearInterval(id);
+            }
+            if (theChar != ' ' && theChar != '<' && theChar != 'b' && theChar != 'r' && theChar != '>') {
+                keySound.play();
+
+            }
+            var nextFourChars = inputText.substr(charIndex,4);
+            if(nextFourChars=='<BR>' || nextFourChars=='<br>'){
+                theChar  = '<BR>';
+                charIndex+=3;
+            }
+            if(nextFourChars=='<h1>' || nextFourChars=='<H1>'){
+                theChar  = '<h1>';
+                charIndex+=3;
+            }
+            var nextFiveChars = inputText.substr(charIndex,5)
+            if(nextFiveChars=='</h1>' || nextFiveChars=='</H1>'){
+                theChar  = '</h1>';
+                charIndex+=4;
+            }
+            initString = initString + theChar + "<SPAN id='blink'>_</SPAN>";
+            document.getElementById('myContent').innerHTML = initString;
+            charIndex = charIndex/1 +1;
+            if(charIndex%2==1){
+                document.getElementById('blink').style.display='none';
+            }else{
+                document.getElementById('blink').style.display='inline';
+            }
+
+            if(charIndex<=stringLength){
+                setTimeout('writeContent(false)',60);
+            }else{
+                blinkSpan();
+            }
+        }
+        var currentStyle = 'inline';
+        function blinkSpan(){
+            if(currentStyle=='inline'){
+                currentStyle='none';
+            }else{
+                currentStyle='inline';
+            }
+            document.getElementById('blink').style.display = currentStyle;
+            setTimeout('blinkSpan()',500);
+        }
+        setTimeout('writeContent(true)', 4000);
+</script>
+</body>
+</html
